@@ -1,0 +1,228 @@
+var w = 720;
+var h = 400;
+var myFont;
+var recti = 0;
+var images;
+var pos = [];
+var n = 0;
+var database;
+
+function preload() 
+{
+  console.log("Running preload");
+  myFont = loadFont('RussoOne-Regular.ttf');
+  images = [loadImage("1.gif")];
+}  
+
+function setup() 
+{
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD0GHpvbYqMiwciCNw7SRxkdDk_S-uKJvs",
+    authDomain: "mirrorbase-4fb5e.firebaseapp.com",
+    databaseURL: "https://mirrorbase-4fb5e.firebaseio.com",
+    projectId: "mirrorbase-4fb5e",
+    storageBucket: "mirrorbase-4fb5e.appspot.com",
+    messagingSenderId: "233855713855"
+  };
+  
+  firebase.initializeApp(config);
+  database = firebase.database();
+  var ref = database.ref("people");
+ 
+ var provider = new firebase.auth.GoogleAuthProvider();
+ firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Google Access Token. You can use it to access the Google API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  // ...
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+
+
+ 
+ 
+  var data = 
+  {
+   name: "Conrad",
+   image: images[0]
+  }
+  ref.push(data);
+  
+  var col = color(200,200,200);
+  var c = createCanvas(w, h);
+  c.drop(addN);
+  homeButton = createButton("⌂");
+  homeButton.style("background-color", col);
+  homeButton.position(w*0.05,h*0.05);
+  homeButton.mousePressed(GoHome);
+  minusButton = createButton("-");
+  minusButton.mousePressed(subtractN);
+  minusButton.style("background-color", col);
+  minusButton.position(w*0.10,h*0.05);
+  saveButton = createButton("💾");
+  saveButton.mousePressed(sav);
+  saveButton.style("background-color", col);
+  saveButton.position(w*0.15,h*0.05);
+  input = createElement("textarea");
+  input.position(w*0.55, h*0.1);
+  input.size(300,330);
+  textSize(32);
+  textFont(myFont);
+}
+
+function draw() 
+{
+  background("#3898ec");  
+  //Background rectangle divider
+  fill(56*0.7,152*0.7,236*0.7);
+  stroke(56*0.8,152*0.8,236*0.8);
+  rect(w*0.47+3, 0, (w*0.55-w*0.50)*0.5, h);
+  //Rectangle divider
+  fill(56*0.8,152*0.8,236*0.8);
+  stroke(56*0.8,152*0.8,236*0.8);
+  rect(w*0.47, 0, (w*0.55-w*0.50)*0.5, h);
+  //Text
+  fill(255, 255, 255);
+  textAlign(LEFT,CENTER);
+  text("Notes", w*0.55, h*0.075-10);
+  //Rectangles
+  drawRectangle();
+}
+
+function drawRectangle()
+{
+   for(i = 0; i<n; i++)
+   {
+     if(i < 4)
+     {
+       fill(56*0.7,152*0.7,236*0.7);
+       stroke(56*0.8,152*0.8,236*0.8);
+       rect(w*0.05+w*0.1*i, h*0.2, 50, 50);
+       fill(255,255,255);
+       textAlign(CENTER, TOP);
+       text("+", w*0.05+25+w*0.1*i, h*0.2+5);
+       image(images[i],w*0.05+w*0.1*i, h*0.2,50,50);
+       pos[i] = [w*0.05+w*0.1*i,h*0.2];
+     } 
+     else if(i < 8)
+     {
+       space = h*0.2;
+       recti = i-4;
+       fill(56*0.7,152*0.7,236*0.7);
+       stroke(56*0.8,152*0.8,236*0.8);
+       rect(w*0.05+w*0.1*recti, h*0.2+space, 50, 50);
+       fill(255,255,255);
+       textAlign(CENTER, TOP);
+       text("+", w*0.05+25+w*0.1*recti, h*0.2+5+space);
+       image(images[i],w*0.05+w*0.1*recti, h*0.2+space,50,50);
+       pos[i] = [w*0.05+w*0.1*recti, h*0.2+space];
+     }
+     else if(i < 12)
+     {
+       space = h*0.2*2;
+       recti = i-8;
+       fill(56*0.7,152*0.7,236*0.7);
+       stroke(56*0.8,152*0.8,236*0.8);
+       rect(w*0.05+w*0.1*recti, h*0.2+space, 50, 50);
+       fill(255,255,255);
+       textAlign(CENTER, TOP);
+       text("+", w*0.05+25+w*0.1*recti, h*0.2+5+space);
+       image(images[i],w*0.05+w*0.1*recti, h*0.2+space,50,50);
+       pos[i] = [w*0.05+w*0.1*recti, h*0.2+space];
+     }
+     else if(i < 16)
+     {
+       space = h*0.2*3;
+       recti = i-12;
+       fill(56*0.7,152*0.7,236*0.7);
+       stroke(56*0.8,152*0.8,236*0.8);
+       rect(w*0.05+w*0.1*recti, h*0.2+space, 50, 50);
+       fill(255,255,255);
+       textAlign(CENTER, TOP);
+       text("+", w*0.05+25+w*0.1*recti, h*0.2+5+space);
+       image(images[0],w*0.05+w*0.1*recti, h*0.2+space,50,50);
+       pos[i] = [w*0.05+w*0.1*recti, h*0.2+space];
+     }
+   }
+}
+
+function loadFile(rect)
+{
+  
+}
+
+function subtractN()
+{
+  if(n > 0)
+  {
+    n -= 1;  
+  }
+}
+
+function addN(file)
+{
+  // If it's an image file
+  if (file.type === 'image') {
+    if(n < 16)
+    {
+      n += 1; 
+    }
+    // Create an image DOM element but don't show it
+    images[n-1] = createImg(file.data).hide();
+    // Draw the image onto the canvas
+  } else {
+
+  }
+}
+
+function GoHome()
+{
+ window.location.href = 'http://www.google.com'; 
+}
+//https://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript
+function encodeImageFileAsURL(element) 
+{
+  var file = element.files[0];
+  var reader = new FileReader();
+  reader.onloadend = function() 
+  {
+    console.log('RESULT', reader.result)
+  }
+  reader.readAsDataURL(file);
+}
+
+function sav()
+{
+   var ref = database.ref("people");
+   ref.on("value", gotData, errData);
+}
+
+function gotData(data)
+{
+   var people = data.val();
+   var keys = Object.keys(people);
+   console.log(keys);
+   for(var i = 0; i < keys.length; i++)
+   {
+      var k = keys[i];
+      var images = people[k].image;
+      var person = people[k].image;
+      console.log(images, image);
+   }
+}
+
+function errData(err)
+{
+   console.log("Error:");
+   console.log(err);
+}

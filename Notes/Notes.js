@@ -158,34 +158,28 @@ function PageZero()
   buttonTwo.position(10,150*2+15);
   buttonThree.position(10,150*3+15);
   buttonFour.position(10,150*4+15);
+  Upload();
+  
 }
 function PageOne()
 {
   currentpage = 1;
   input.value(notes[0]);
-  Upload();
-  load();
 }
 function PageTwo()
 {
   currentpage = 2;
   input.value(notes[1]);
-  Upload();
-  load();
 }
 function PageThree()
 {
   currentpage = 3;
   input.value(notes[2]);
-  Upload();
-  load();
 }
 function PageFour()
 {
   currentpage = 4;
   input.value(notes[3]);
-  Upload();
-  load();
 }
 
 function login()

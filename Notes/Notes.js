@@ -164,24 +164,28 @@ function PageOne()
   currentpage = 1;
   input.value(notes[0]);
   Upload();
+  load();
 }
 function PageTwo()
 {
   currentpage = 2;
   input.value(notes[1]);
   Upload();
+  load();
 }
 function PageThree()
 {
   currentpage = 3;
   input.value(notes[2]);
   Upload();
+  load();
 }
 function PageFour()
 {
   currentpage = 4;
   input.value(notes[3]);
   Upload();
+  load();
 }
 
 function login()

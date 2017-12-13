@@ -151,6 +151,7 @@ for(i = 0; i<4; i++)
 function PageZero()
 {
   Upload();
+  load();
   currentpage = 0;
   input.position(w*3, h*0.12);
   buttonSave.position(w*3-w*0.05,15);
